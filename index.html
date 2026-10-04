@@ -7,22 +7,20 @@
     <title>Spotibai</title>
     <style>
       :root {
-        --bg: #09090b;
-        --bg-2: #121317;
-        --panel: rgba(24, 24, 27, 0.92);
-        --panel-strong: #18181b;
-        --panel-alt: rgba(255, 255, 255, 0.03);
-        --muted: #a1a1aa;
-        --muted-strong: #d4d4d8;
-        --line: rgba(255, 255, 255, 0.08);
-        --white: #f4f4f5;
+        --bg: #090909;
+        --bg-2: #111113;
+        --panel: #1a1a1d;
+        --panel-2: #1d1d20;
+        --panel-3: #2a2a2e;
+        --text: #f5f5f5;
+        --muted: #c7c7cb;
+        --muted-2: #8a8a8d;
+        --line: rgba(255,255,255,0.12);
         --green: #1ed760;
-        --green-soft: rgba(30, 215, 96, 0.18);
-        --danger: #ff5c5c;
-        --shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
-        --radius: 22px;
-        --nav-height: 74px;
-        --header-height: 74px;
+        --green-2: #18c65a;
+        --green-soft: rgba(30,215,96,0.16);
+        --white: #ffffff;
+        --shadow: 0 16px 30px rgba(0,0,0,0.35);
       }
 
       * { box-sizing: border-box; }
@@ -31,2074 +29,878 @@
         margin: 0;
         min-height: 100%;
         background: var(--bg);
-        color: var(--white);
+        color: var(--text);
         font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         overscroll-behavior: none;
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
       }
 
       body {
         min-height: 100vh;
-        background:
-          radial-gradient(circle at top left, rgba(30, 215, 96, 0.10), transparent 26%),
-          linear-gradient(180deg, #09090b 0%, #111114 100%);
-      }
-
-      button, input, textarea, select {
-        font: inherit;
-      }
-
-      button, .touch-target {
-        min-height: 44px;
-        min-width: 44px;
-      }
-
-      input, textarea, select {
-        user-select: text;
-      }
-
-      button, .no-select {
-        -webkit-user-select: none;
-        user-select: none;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .app {
-        max-width: 1500px;
-        margin: 0 auto;
-        min-height: 100vh;
-        position: relative;
-      }
-
-      .topbar {
-        position: sticky;
-        top: 0;
-        z-index: 30;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: calc(var(--header-height) + env(safe-area-inset-top));
-        padding: calc(env(safe-area-inset-top) + 12px) 20px 12px;
-        backdrop-filter: blur(18px);
-        background: rgba(9, 9, 11, 0.72);
-        border-bottom: 1px solid var(--line);
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-weight: 800;
-        letter-spacing: 0.01em;
-      }
-
-      .brand-mark {
-        width: 26px;
-        height: 26px;
-        border-radius: 10px;
-        background: var(--green);
-        position: relative;
-        box-shadow: inset 0 0 0 2px rgba(0,0,0,0.18);
-      }
-
-      .brand-mark span {
-        position: absolute;
-        bottom: 5px;
-        width: 5px;
-        border-radius: 4px 4px 0 0;
-        background: rgba(0,0,0,0.9);
-      }
-
-      .brand-mark span:nth-child(1) { left: 5px; height: 12px; }
-      .brand-mark span:nth-child(2) { left: 10px; height: 16px; }
-      .brand-mark span:nth-child(3) { left: 15px; height: 13px; }
-      .brand-mark span:nth-child(4) { left: 20px; height: 18px; }
-
-      .topbar-actions {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .icon-btn, .pill-btn, .primary-btn, .danger-btn {
-        border: 1px solid var(--line);
-        background: rgba(255,255,255,0.03);
-        color: var(--white);
-        border-radius: 12px;
-        padding: 10px 14px;
-        cursor: pointer;
-        transition: 0.18s ease;
-      }
-
-      .icon-btn:hover, .pill-btn:hover, .primary-btn:hover, .danger-btn:hover {
-        transform: translateY(-1px);
-        border-color: rgba(255,255,255,0.14);
-        background: rgba(255,255,255,0.06);
-      }
-
-      .primary-btn {
-        background: var(--green);
-        color: #06160d;
-        border-color: rgba(30,215,96,0.6);
-        font-weight: 700;
-      }
-
-      .danger-btn {
-        background: rgba(255, 92, 92, 0.08);
-        border-color: rgba(255, 92, 92, 0.35);
-        color: #ffcaca;
-      }
-
-      .layout {
-        display: grid;
-        grid-template-columns: 300px minmax(0, 1fr);
-        min-height: calc(100vh - var(--header-height) - 90px);
-      }
-
-      .sidebar {
-        border-right: 1px solid var(--line);
-        background: rgba(10,10,14,0.7);
-        display: flex;
-        flex-direction: column;
-        min-height: 100%;
-        padding: 18px 14px 120px;
-      }
-
-      .sidebar-section {
-        margin-bottom: 18px;
-      }
-
-      .section-title {
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        font-size: 11px;
-        font-weight: 700;
-        padding: 0 10px 10px;
-      }
-
-      .playlist-list {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .playlist-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        border-radius: 14px;
-        padding: 12px 12px;
-        border: 1px solid transparent;
-        background: transparent;
-        color: var(--muted-strong);
-        cursor: pointer;
-        transition: 0.2s ease;
-      }
-
-      .playlist-item:hover {
-        background: rgba(255,255,255,0.04);
-        border-color: rgba(255,255,255,0.06);
-      }
-
-      .playlist-item.active {
-        background: linear-gradient(180deg, rgba(30,215,96,0.14), rgba(30,215,96,0.04));
-        border-color: rgba(30,215,96,0.22);
-      }
-
-      .playlist-identity {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        min-width: 0;
-      }
-
-      .playlist-badge {
-        width: 36px;
-        height: 36px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, rgba(30,215,96,0.25), rgba(30,215,96,0.08));
-        display: grid;
-        place-items: center;
-        color: var(--green);
-        font-weight: 800;
-      }
-
-      .playlist-name {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-weight: 600;
-      }
-
-      .playlist-meta {
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .upload-box {
-        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
-        border: 1px dashed rgba(255,255,255,0.12);
-        border-radius: 16px;
-        padding: 12px;
-      }
-
-      .upload-shell {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        width: 100%;
-        min-height: 54px;
-        border: 1px solid rgba(255,255,255,0.07);
-        background: rgba(255,255,255,0.015);
-        border-radius: 12px;
-        color: var(--muted-strong);
-        cursor: pointer;
-        font-weight: 600;
-      }
-
-      .upload-shell input {
-        display: none;
-      }
-
-      .main-panel {
-        padding: 20px 20px 120px;
-      }
-
-      .screen {
-        animation: fadeInUp 0.3s ease;
-      }
-
-      @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(14px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
-      .empty-state {
-        min-height: 300px;
-        display: grid;
-        place-items: center;
-        text-align: center;
-        color: var(--muted-strong);
-      }
-
-      .empty-card {
-        max-width: 640px;
-        padding: 28px;
-        border-radius: 28px;
-        background: rgba(255,255,255,0.02);
-        border: 1px solid rgba(255,255,255,0.07);
-      }
-
-      .empty-card h1 {
-        font-size: clamp(2rem, 5vw, 3.4rem);
-        margin: 0 0 10px;
-        letter-spacing: -0.06em;
-      }
-
-      .empty-card p {
-        color: var(--muted);
-        font-size: 1.02rem;
-        line-height: 1.6;
-      }
-
-      .empty-actions {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-top: 18px;
-      }
-
-      .playlist-header {
-        position: relative;
-        border-radius: 26px;
-        min-height: 220px;
-        overflow: hidden;
-        background: linear-gradient(135deg, rgba(30,215,96,0.28), rgba(32,97,63,0.08) 42%, rgba(18,18,22,0.96));
-        border: 1px solid rgba(255,255,255,0.06);
-        box-shadow: var(--shadow);
-      }
-
-      .playlist-header::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(140deg, rgba(255,255,255,0.12), rgba(255,255,255,0));
-      }
-
-      .playlist-header-inner {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 220px;
-        padding: 18px 18px 20px;
-      }
-
-      .header-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 14px;
-      }
-
-      .back-btn {
-        border: 1px solid rgba(255,255,255,0.12);
-        background: rgba(0,0,0,0.12);
-        color: var(--white);
-        border-radius: 12px;
-        padding: 10px 12px;
-        cursor: pointer;
-      }
-
-      .playlist-name-block {
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 16px;
-        flex-wrap: wrap;
-      }
-
-      .playlist-header h2 {
-        margin: 0;
-        font-size: clamp(2rem, 5vw, 3.2rem);
-        letter-spacing: -0.05em;
-      }
-
-      .meta-row {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: rgba(255,255,255,0.8);
-        font-size: 0.93rem;
-      }
-
-      .playlist-actions {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-top: 16px;
-      }
-
-      .song-list {
-        margin-top: 22px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .song-row {
-        display: grid;
-        grid-template-columns: 52px minmax(0, 1fr) auto auto;
-        align-items: center;
-        gap: 12px;
-        background: rgba(255,255,255,0.02);
-        border: 1px solid rgba(255,255,255,0.04);
-        border-radius: 14px;
-        padding: 10px 12px;
-        animation: fadeInUp 0.35s ease both;
-      }
-
-      .song-row:hover {
-        background: rgba(255,255,255,0.035);
-      }
-
-      .song-cover {
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, rgba(30,215,96,0.35), rgba(30,215,96,0.05));
-        display: grid;
-        place-items: center;
-        color: var(--green);
-        font-size: 12px;
-        font-weight: 800;
-      }
-
-      .song-info {
-        min-width: 0;
-      }
-
-      .song-title {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-weight: 700;
-      }
-
-      .song-sub {
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .song-actions {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .mini-btn {
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
-        display: grid;
-        place-items: center;
-        border: 1px solid var(--line);
-        background: rgba(255,255,255,0.02);
-        color: var(--white);
-        cursor: pointer;
-      }
-
-      .mini-btn:hover {
-        background: rgba(255,255,255,0.06);
-      }
-
-      .player-bar {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: calc(env(safe-area-inset-bottom) + 62px);
-        z-index: 60;
-        padding: 0 16px 8px;
-        pointer-events: none;
-      }
-
-      .player-bar-inner {
-        pointer-events: auto;
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        border: 1px solid rgba(255,255,255,0.08);
-        background: rgba(20,20,24,0.9);
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(16px);
-        border-radius: 18px;
-        padding: 12px 16px;
-      }
-
-      .track-art {
-        width: 54px;
-        height: 54px;
-        border-radius: 14px;
-        background: linear-gradient(135deg, rgba(30,215,96,0.26), rgba(30,215,96,0.1));
-        display: grid;
-        place-items: center;
-        font-weight: 800;
-        color: var(--green);
-      }
-
-      .track-info {
-        min-width: 0;
-        flex: 1;
-      }
-
-      .track-title {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-weight: 700;
-      }
-
-      .track-sub {
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .transport {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .transport-btn {
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        border: 1px solid rgba(255,255,255,0.08);
-        background: rgba(255,255,255,0.02);
-        display: grid;
-        place-items: center;
-        cursor: pointer;
-        color: var(--white);
-      }
-
-      .transport-btn.primary {
-        width: 42px;
-        height: 42px;
-        background: var(--green);
-        color: #07170d;
-        border-color: rgba(30,215,96,0.5);
-      }
-
-      .seek-wrap {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        min-width: 180px;
-      }
-
-      .seek-wrap input[type="range"], .slider {
-        width: 100%;
-        accent-color: var(--green);
-      }
-
-      .bottom-nav {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 70;
-        border-top: 1px solid var(--line);
-        background: rgba(10,10,14,0.96);
-        backdrop-filter: blur(20px);
-        height: calc(74px + env(safe-area-inset-bottom));
-        padding: 10px 16px calc(8px + env(safe-area-inset-bottom));
-        display: none;
-      }
-
-      .bottom-nav-inner {
-        max-width: 500px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        height: 100%;
-      }
-
-      .bottom-tab {
-        border-radius: 14px;
-        border: 1px solid transparent;
-        background: transparent;
-        color: var(--muted);
-        font-weight: 700;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
-
-      .bottom-tab.active {
-        background: rgba(30,215,96,0.10);
-        border-color: rgba(30,215,96,0.22);
-        color: var(--white);
-      }
-
-      .modal-backdrop {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.56);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 100;
-        padding: 18px;
-      }
-
-      .modal {
-        width: min(420px, 92vw);
-        background: rgba(18,18,22,0.96);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 18px;
-        box-shadow: var(--shadow);
-        padding: 18px;
-      }
-
-      .modal h3 {
-        margin: 0 0 8px;
-        font-size: 1.2rem;
-      }
-
-      .modal p {
-        margin: 0 0 18px;
-        color: var(--muted);
-      }
-
-      .modal-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-        margin-top: 18px;
-      }
-
-      .auth-shell {
-        min-height: calc(100vh - 120px);
-        display: grid;
-        place-items: center;
-        padding: 32px 16px 100px;
-      }
-
-      .auth-card {
-        width: min(460px, 100%);
-        background: rgba(18,18,22,0.9);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 24px;
-        padding: 24px;
-        box-shadow: var(--shadow);
-      }
-
-      .auth-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 16px;
-      }
-
-      .auth-card h2 {
-        margin: 0;
-        font-size: clamp(1.8rem, 5vw, 2.25rem);
-        letter-spacing: -0.05em;
-      }
-
-      .auth-form {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-      }
-
-      .field {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .field label {
-        color: var(--muted-strong);
-        font-size: 0.96rem;
-      }
-
-      .field input {
-        width: 100%;
-        min-height: 48px;
-        border-radius: 12px;
-        border: 1px solid rgba(255,255,255,0.08);
-        background: rgba(255,255,255,0.02);
-        color: var(--white);
-        padding: 12px 14px;
-        outline: none;
-      }
-
-      .field input:focus {
-        border-color: rgba(30,215,96,0.45);
-        box-shadow: 0 0 0 4px rgba(30,215,96,0.12);
-      }
-
-      .auth-link-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-        margin-top: 2px;
-      }
-
-      .small-link {
-        color: var(--green);
-        font-size: 0.92rem;
-        cursor: pointer;
-      }
-
-      .toast {
-        position: fixed;
-        right: 18px;
-        bottom: calc(92px + env(safe-area-inset-bottom));
-        z-index: 120;
-        background: rgba(15,15,18,0.96);
-        border: 1px solid rgba(255,255,255,0.08);
-        color: var(--white);
-        border-radius: 12px;
-        padding: 12px 14px;
-        box-shadow: var(--shadow);
-        opacity: 0;
-        transform: translateY(12px);
-        transition: 0.18s ease;
-        pointer-events: none;
-      }
-
-      .toast.show {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
-
-      .pull-to-refresh {
-        position: sticky;
-        top: 0;
-        height: 0;
         display: flex;
         justify-content: center;
         align-items: flex-start;
-        overflow: hidden;
-        transition: 0.2s ease;
       }
 
-      .pull-spinner {
+      button, input {
+        font: inherit;
+      }
+
+      .phone-shell {
+        width: 100%;
+        max-width: 440px;
+        min-height: 100vh;
+        background: #0b0b0b;
+        position: relative;
+        overflow: hidden;
+        border-left: 1px solid rgba(255,255,255,0.04);
+        border-right: 1px solid rgba(255,255,255,0.04);
+      }
+
+      .statusbar {
+        height: 82px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 18px 12px;
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: #f0f0f0;
+      }
+
+      .statusbar-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .statusbar-right {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+      }
+
+      .signal {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 9px;
+        opacity: 0.9;
+      }
+
+      .signal-bars {
+        display: inline-flex;
+        align-items: end;
+        gap: 2px;
+        height: 14px;
+      }
+
+      .signal-bars span {
+        width: 2px;
+        border-radius: 2px;
+        background: #f4f4f4;
+        display: inline-block;
+      }
+
+      .signal-bars span:nth-child(1) { height: 4px; }
+      .signal-bars span:nth-child(2) { height: 6px; }
+      .signal-bars span:nth-child(3) { height: 8px; }
+      .signal-bars span:nth-child(4) { height: 10px; }
+      .signal-bars span:nth-child(5) { height: 12px; }
+
+      .battery-wrap {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .battery {
+        width: 22px;
+        height: 11px;
+        border-radius: 3px;
+        border: 1px solid rgba(255,255,255,0.8);
+        position: relative;
+      }
+
+      .battery::after {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 5px;
+        background: rgba(255,255,255,0.8);
+        right: -4px;
+        top: 2px;
+        border-radius: 2px;
+      }
+
+      .battery::before {
+        content: "";
+        position: absolute;
+        inset: 1px 1px 1px 1px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, #f7f7f7 100%, #f7f7f7 100%);
+      }
+
+      .browser-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px 12px;
+      }
+
+      .browser-pill {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        margin-right: 10px;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 999px;
+        padding: 12px 14px;
+        height: 46px;
+      }
+
+      .browser-home {
+        width: 20px;
+        height: 20px;
+        position: relative;
+        border-radius: 5px;
+        border: 2px solid rgba(255,255,255,0.9);
+      }
+
+      .browser-home::before {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-left: 2px solid rgba(255,255,255,0.9);
+        border-top: 2px solid rgba(255,255,255,0.9);
+        transform: rotate(45deg);
+        left: 3px;
+        top: 2px;
+      }
+
+      .browser-url {
+        flex: 1;
+        color: rgba(255,255,255,0.95);
+        font-size: 20px;
+        letter-spacing: -0.04em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .browser-search {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 2px solid rgba(255,255,255,0.8);
+        position: relative;
+      }
+
+      .browser-search::before {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border: 3px solid rgba(255,255,255,0.9);
+        border-radius: 50%;
+        top: 8px;
+        left: 8px;
+      }
+
+      .browser-search::after {
+        content: "";
+        position: absolute;
+        width: 9px;
+        height: 3px;
+        background: rgba(255,255,255,0.9);
+        border-radius: 2px;
+        right: 9px;
+        bottom: 9px;
+        transform: rotate(45deg);
+      }
+
+      .browser-more {
+        width: 22px;
+        height: 22px;
+        position: relative;
+      }
+
+      .browser-more::before,
+      .browser-more::after,
+      .browser-more span {
+        content: "";
+        position: absolute;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.9);
+        transform: translateX(-50%);
+      }
+
+      .browser-more::before { top: 0; }
+      .browser-more span { top: 8px; }
+      .browser-more::after { top: 16px; }
+
+      .app-frame {
+        background: #0a0a0a;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        min-height: calc(100vh - 138px);
+      }
+
+      .app-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 20px 24px;
+      }
+
+      .brand-wrap {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .logo {
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        background: var(--green);
+        position: relative;
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+      }
+
+      .logo::before,
+      .logo::after,
+      .logo span {
+        content: "";
+        position: absolute;
+        bottom: 7px;
+        width: 5px;
+        border-radius: 999px;
+        background: rgba(0,0,0,0.9);
+      }
+
+      .logo::before { left: 6px; height: 12px; }
+      .logo span { left: 12px; height: 16px; }
+      .logo::after { left: 18px; height: 20px; }
+      .logo .bar-last { left: 24px; height: 14px; }
+
+      .brand-name {
+        font-size: 42px;
+        font-weight: 700;
+        letter-spacing: -0.065em;
+        line-height: 1;
+      }
+
+      .gear {
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        border: 2px solid rgba(255,255,255,0.1);
-        border-top-color: var(--green);
-        animation: spin 0.8s linear infinite;
-        margin-top: 8px;
-        opacity: 0;
+        border: 2px solid rgba(255,255,255,0.75);
+        position: relative;
       }
 
-      .pull-spinner.visible {
-        opacity: 1;
+      .gear::before,
+      .gear::after {
+        content: "";
+        position: absolute;
+        inset: 7px;
+        border-radius: 50%;
+        border: 2px solid rgba(255,255,255,0.75);
       }
 
-      @keyframes spin {
-        to { transform: rotate(360deg); }
+      .gear::after {
+        inset: 11px;
+        border-width: 1px;
       }
 
-      @media (hover: none) {
-        .mini-btn, .icon-btn, .pill-btn, .primary-btn, .danger-btn, .transport-btn, .bottom-tab, .playlist-item, .song-row, .upload-shell, .back-btn {
-          min-height: 48px;
-          min-width: 48px;
-        }
+      .library-panel {
+        padding: 0 20px;
       }
 
-      @media (max-width: 900px) {
-        .layout {
-          grid-template-columns: 1fr;
-        }
-
-        .sidebar {
-          display: none;
-        }
-
-        .main-panel {
-          padding: 16px 16px 110px;
-        }
-
-        .player-bar {
-          bottom: calc(env(safe-area-inset-bottom) + 74px);
-        }
-
-        .player-bar-inner {
-          gap: 10px;
-        }
-
-        .track-info {
-          min-width: 0;
-          flex: 1;
-        }
-
-        .bottom-nav {
-          display: block;
-        }
+      .section-title {
+        font-size: 40px;
+        font-weight: 700;
+        letter-spacing: -0.065em;
+        line-height: 1.1;
+        margin: 4px 0 22px;
       }
 
-      @media (max-width: 640px) {
-        .topbar {
-          padding-left: 14px;
-          padding-right: 14px;
-        }
+      .upload-btn {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+        width: 100%;
+        height: 70px;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.04);
+        border-radius: 16px;
+        padding: 0 18px;
+        color: var(--text);
+        font-size: 19px;
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        cursor: pointer;
+      }
 
-        .main-panel {
-          padding: 12px 12px 120px;
-        }
+      .upload-btn .plus {
+        font-size: 36px;
+        line-height: 1;
+        font-weight: 300;
+      }
 
-        .playlist-header {
-          min-height: 180px;
-        }
+      .player-card {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 78px;
+        border-top: 1px solid var(--line);
+        background: rgba(10,10,10,0.96);
+        padding: 18px 20px 0;
+      }
 
-        .playlist-header-inner {
-          min-height: 180px;
-          padding: 14px 14px 16px;
-        }
+      .mini-player {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding-bottom: 18px;
+      }
 
-        .song-row {
-          grid-template-columns: 44px minmax(0, 1fr) auto;
-        }
+      .mini-art {
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #13b66b, #0d7c57);
+        display: grid;
+        place-items: center;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+      }
 
-        .song-actions {
-          grid-column: 2 / -1;
-          justify-content: flex-end;
-        }
+      .mini-art .note {
+        width: 24px;
+        height: 24px;
+        position: relative;
+      }
 
-        .player-bar-inner {
-          padding: 10px 12px;
-        }
+      .mini-art .note::before {
+        content: "";
+        position: absolute;
+        left: 8px;
+        top: 2px;
+        width: 10px;
+        height: 16px;
+        border: 3px solid rgba(255,255,255,0.95);
+        border-left-width: 0;
+        border-radius: 0 10px 10px 0;
+        transform: skewX(-18deg);
+      }
 
-        .track-sub {
-          display: none;
-        }
+      .mini-art .note::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 12px;
+        width: 12px;
+        height: 12px;
+        border: 3px solid rgba(255,255,255,0.95);
+        border-radius: 50%;
+      }
 
-        .seek-wrap {
-          display: none;
+      .mini-track {
+        flex: 1;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -0.05em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .controls {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .prev, .next, .play-btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .prev::before, .next::before {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 18px;
+        background: rgba(255,255,255,0.9);
+        border-radius: 2px;
+        transform: skewX(-16deg);
+      }
+
+      .prev::after, .next::after {
+        content: "";
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-top: 3px solid rgba(255,255,255,0.9);
+        border-left: 3px solid rgba(255,255,255,0.9);
+        top: 9px;
+      }
+
+      .prev::after {
+        transform: rotate(-45deg);
+        left: 10px;
+      }
+
+      .next::before {
+        left: 12px;
+      }
+
+      .next::after {
+        transform: rotate(135deg);
+        right: 10px;
+      }
+
+      .play-btn {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--white);
+        box-shadow: 0 8px 16px rgba(255,255,255,0.08);
+      }
+
+      .play-btn::before {
+        content: "";
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-left: 16px solid rgba(0,0,0,0.9);
+        border-bottom: 10px solid transparent;
+        margin-left: 4px;
+      }
+
+      .page-tabs {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 78px;
+        border-top: 1px solid var(--line);
+        background: rgba(10,10,10,0.96);
+      }
+
+      .tab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: rgba(255,255,255,0.76);
+        background: transparent;
+        border: none;
+        font-size: 19px;
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        cursor: pointer;
+      }
+
+      .tab.active {
+        color: var(--text);
+      }
+
+      .tab-icon {
+        width: 24px;
+        height: 24px;
+        position: relative;
+        opacity: 0.9;
+      }
+
+      .tab-icon.library::before,
+      .tab-icon.library::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: currentColor;
+        border-radius: 3px;
+      }
+
+      .tab-icon.library::before { top: 5px; }
+      .tab-icon.library::after { top: 12px; }
+      .tab-icon.library span {
+        position: absolute;
+        top: 19px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: currentColor;
+        border-radius: 3px;
+      }
+
+      .tab-icon.player {
+        border: 3px solid currentColor;
+        border-radius: 5px;
+        border-top-width: 2px;
+      }
+
+      .tab-icon.player::before {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border: 3px solid currentColor;
+        border-radius: 50%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .view {
+        display: none;
+      }
+
+      .view.active {
+        display: block;
+      }
+
+      .player-screen {
+        padding: 18px 20px 0;
+      }
+
+      .player-art {
+        width: 100%;
+        aspect-ratio: 1.35;
+        border-radius: 22px;
+        background: linear-gradient(135deg, #16bf73, #0e7a5d 80%);
+        display: grid;
+        place-items: center;
+        margin-top: 18px;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+      }
+
+      .player-art .note {
+        width: 130px;
+        height: 130px;
+        position: relative;
+      }
+
+      .player-art .note::before {
+        content: "";
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        left: 25px;
+        top: 18px;
+        border: 8px solid rgba(255,255,255,0.95);
+        border-left: 0;
+        border-radius: 0 45px 45px 0;
+        transform: skewX(-18deg);
+      }
+
+      .player-art .note::after {
+        content: "";
+        position: absolute;
+        width: 72px;
+        height: 72px;
+        left: 18px;
+        top: 48px;
+        border: 8px solid rgba(255,255,255,0.95);
+        border-radius: 50%;
+      }
+
+      .player-title {
+        text-align: center;
+        font-size: 48px;
+        font-weight: 700;
+        letter-spacing: -0.065em;
+        margin-top: 28px;
+      }
+
+      .slider-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .slider {
+        flex: 1;
+        -webkit-appearance: none;
+        appearance: none;
+        height: 6px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.25);
+        outline: none;
+      }
+
+      .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.9);
+      }
+
+      .time-text {
+        font-size: 20px;
+        color: rgba(255,255,255,0.7);
+        min-width: 42px;
+      }
+
+      .player-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+        margin-top: 24px;
+        padding-bottom: 18px;
+      }
+
+      .control-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        color: rgba(255,255,255,0.9);
+        position: relative;
+      }
+
+      .shuffle-icon::before,
+      .shuffle-icon::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 10px;
+        border: 2px solid currentColor;
+        border-color: currentColor transparent currentColor currentColor;
+        border-radius: 12px 12px 0 12px;
+        transform: rotate(18deg);
+      }
+
+      .shuffle-icon::after {
+        transform: rotate(198deg);
+        left: 20px;
+        top: 12px;
+      }
+
+      .prev-control,
+      .next-control {
+        width: 0;
+        height: 0;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        position: relative;
+      }
+
+      .prev-control {
+        border-right: 18px solid rgba(255,255,255,0.9);
+        margin-right: 10px;
+      }
+
+      .prev-control::before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        border-right: 18px solid rgba(255,255,255,0.9);
+        left: -22px;
+      }
+
+      .next-control {
+        border-left: 18px solid rgba(255,255,255,0.9);
+        margin-left: 10px;
+      }
+
+      .next-control::before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        border-left: 18px solid rgba(255,255,255,0.9);
+        right: -22px;
+      }
+
+      .play-main {
+        width: 74px;
+        height: 74px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.95);
+        position: relative;
+        box-shadow: 0 10px 28px rgba(255,255,255,0.08);
+      }
+
+      .play-main::before {
+        content: "";
+        position: absolute;
+        left: 28px;
+        top: 22px;
+        width: 0;
+        height: 0;
+        border-top: 15px solid transparent;
+        border-left: 24px solid rgba(0,0,0,0.92);
+        border-bottom: 15px solid transparent;
+      }
+
+      .repeat-icon {
+        position: relative;
+        width: 24px;
+        height: 24px;
+      }
+
+      .repeat-icon::before,
+      .repeat-icon::after {
+        content: "";
+        position: absolute;
+        border: 3px solid currentColor;
+        border-top-color: transparent;
+        border-radius: 50%;
+        width: 14px;
+        height: 14px;
+      }
+
+      .repeat-icon::before {
+        left: 3px;
+        top: 5px;
+        transform: rotate(-25deg);
+      }
+
+      .repeat-icon::after {
+        right: 1px;
+        top: 1px;
+        transform: rotate(155deg);
+      }
+
+      @media (min-width: 600px) {
+        .phone-shell {
+          min-height: 100vh;
         }
       }
     </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div class="phone-shell">
+      <div class="statusbar">
+        <div class="statusbar-left">5:20 AM</div>
+        <div class="statusbar-right">
+          <div class="signal"><div class="signal-bars"><span></span><span></span><span></span><span></span><span></span></div></div>
+          <div style="font-size:10px; padding-left:4px;">N</div>
+          <div style="font-size:10px;">5G</div>
+          <div class="battery-wrap"><div class="battery"></div></div>
+        </div>
+      </div>
+
+      <div class="browser-bar">
+        <div class="browser-pill">
+          <div class="browser-home" aria-hidden="true"></div>
+          <div class="browser-url">app.base44.com/</div>
+          <div class="browser-search" aria-hidden="true"></div>
+        </div>
+        <div class="browser-more" aria-hidden="true"><span></span></div>
+      </div>
+
+      <div class="app-frame">
+        <div class="app-header">
+          <div class="brand-wrap">
+            <div class="logo" aria-label="Spotibai logo">
+              <span></span>
+              <div class="bar-last" style="position:absolute;left:24px;width:5px;height:14px;bottom:7px;border-radius:999px;background:rgba(0,0,0,0.9);"></div>
+            </div>
+            <div class="brand-name">Spotibai</div>
+          </div>
+          <div class="gear" aria-label="Settings"></div>
+        </div>
+
+        <div id="libraryView" class="view active">
+          <div class="library-panel">
+            <div class="section-title">Your Library</div>
+            <button class="upload-btn" type="button">
+              <span class="plus">＋</span>
+              <span>Upload songs or zip</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="playerView" class="view">
+          <div class="player-screen">
+            <div class="player-art">
+              <div class="note"></div>
+            </div>
+            <div class="player-title">Nothing playing</div>
+            <div class="slider-row">
+              <span class="time-text">0:00</span>
+              <input class="slider" type="range" value="0" />
+              <span class="time-text">0:00</span>
+            </div>
+
+            <div class="player-controls">
+              <div class="control-icon shuffle-icon" aria-label="Shuffle"></div>
+              <div class="prev-control" aria-label="Previous"></div>
+              <div class="play-main" aria-label="Play"></div>
+              <div class="next-control" aria-label="Next"></div>
+              <div class="repeat-icon" aria-label="Repeat"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="player-card" aria-label="Now playing summary">
+          <div class="mini-player">
+            <div class="mini-art"><div class="note"></div></div>
+            <div class="mini-track">Nothing playing</div>
+            <div class="controls">
+              <button class="prev" type="button" aria-label="Previous track" style="width:32px;height:32px;"></button>
+              <button class="play-btn" type="button" aria-label="Play" style="width:52px;height:52px;"></button>
+              <button class="next" type="button" aria-label="Next track" style="width:32px;height:32px;"></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-tabs">
+          <button class="tab active" type="button" data-tab="library">
+            <span class="tab-icon library"><span></span></span>
+            <span>Library</span>
+          </button>
+          <button class="tab" type="button" data-tab="player">
+            <span class="tab-icon player"></span>
+            <span>Player</span>
+          </button>
+        </div>
+      </div>
+    </div>
 
     <script>
-      const DB_NAME = 'offline-music';
-      const appEl = document.getElementById('app');
-      const authKey = 'spotibai-auth';
-      let currentView = 'library';
-      let showModal = null;
-      let importInFlight = false;
-      let currentPlaylistId = null;
-      let initialAppInit = false;
+      const tabs = document.querySelectorAll('.tab');
+      const libraryView = document.getElementById('libraryView');
+      const playerView = document.getElementById('playerView');
 
-      const defaultAuth = { loggedIn: false, email: '' };
-      const state = {
-        playlists: [],
-        songsByPlaylist: {},
-        queue: [],
-        currentIndex: 0,
-        playing: false,
-        currentTime: 0,
-        duration: 0,
-        volume: 0.8,
-        shuffle: false,
-        repeat: 'off',
-        currentSong: null,
-        auth: loadAuth(),
-        importError: '',
-        pullRefresh: false,
-        modal: null,
-      };
-
-      const audio = new Audio();
-      audio.volume = state.volume;
-      audio.preload = 'metadata';
-
-      const appHtml = () => `
-        <div class="app">
-          <header class="topbar">
-            <div class="brand" aria-label="Spotibai logo and brand">
-              <div class="brand-mark" aria-hidden="true">
-                <span></span><span></span><span></span><span></span>
-              </div>
-              <span>Spotibai</span>
-            </div>
-
-            <div class="topbar-actions">
-              <button class="icon-btn" type="button" data-action="toggle-theme" aria-label="Toggle theme">☼</button>
-              <button class="icon-btn" type="button" data-action="settings" aria-label="Open settings">⚙</button>
-            </div>
-          </header>
-
-          <div class="layout">
-            <aside class="sidebar">
-              <div class="sidebar-section">
-                <div class="upload-box">
-                  <label class="upload-shell" for="file-input">
-                    <span>＋</span>
-                    <span>Upload music</span>
-                    <input id="file-input" type="file" accept=".zip,audio/*" multiple />
-                  </label>
-                </div>
-              </div>
-
-              <div class="sidebar-section">
-                <div class="section-title">Your library</div>
-                <div id="playlist-list" class="playlist-list"></div>
-              </div>
-            </aside>
-
-            <main class="main-panel">
-              <div id="screen-root"></div>
-            </main>
-          </div>
-
-          <div id="player-bar-root"></div>
-          <nav class="bottom-nav" aria-label="Mobile navigation">
-            <div class="bottom-nav-inner">
-              <button class="bottom-tab" data-action="nav-library" type="button">Library</button>
-              <button class="bottom-tab" data-action="nav-player" type="button">Player</button>
-            </div>
-          </nav>
-        </div>
-      `;
-
-      function mountApp() {
-        appEl.innerHTML = appHtml();
-        bindGlobalClicks();
-        bindAudioEvents();
-        renderAll();
-      }
-
-      function bindGlobalClicks() {
-        document.addEventListener('click', async (event) => {
-          const target = event.target.closest('[data-action]');
-          if (!target) return;
-          const action = target.dataset.action;
-
-          if (action === 'toggle-theme') {
-            document.body.dataset.theme = document.body.dataset.theme === 'light' ? 'dark' : 'light';
-            return;
-          }
-
-          if (action === 'settings') {
-            renderSettingsModal();
-            return;
-          }
-
-          if (action === 'close-modal') {
-            state.modal = null;
-            renderAll();
-            return;
-          }
-
-          if (action === 'sign-out') {
-            state.auth = { ...defaultAuth };
-            persistAuth();
-            if (!['/login', '/register', '/forgot-password', '/reset-password'].includes(getPath())) {
-              navigate('/login');
-            }
-            renderAll();
-            return;
-          }
-
-          if (action === 'delete-account') {
-            renderConfirmDeleteAccount();
-            return;
-          }
-
-          if (action === 'confirm-delete-account') {
-            await deleteAccount();
-            return;
-          }
-
-          if (action === 'nav-library') {
-            if (location.hash && location.hash.startsWith('#/playlist/')) {
-              navigate('/');
-            } else {
-              navigate('/');
-            }
-            return;
-          }
-
-          if (action === 'nav-player') {
-            navigate('/player');
-            return;
-          }
-
-          if (action === 'goto-playlist') {
-            const id = target.dataset.id;
-            navigate(`/playlist/${id}`);
-            return;
-          }
-
-          if (action === 'back-to-library') {
-            navigate('/');
-            return;
-          }
-
-          if (action === 'shuffle-toggle') {
-            state.shuffle = !state.shuffle;
-            if (state.shuffle) {
-              applyShuffleQueue();
-            } else {
-              restoreQueueOrder();
-            }
-            renderPlayerBar();
-            return;
-          }
-
-          if (action === 'toggle-play') {
-            if (state.currentSong) togglePlayback();
-            return;
-          }
-
-          if (action === 'prev-track') {
-            prevTrack();
-            return;
-          }
-
-          if (action === 'next-track') {
-            nextTrack();
-            return;
-          }
-
-          if (action === 'repeat-cycle') {
-            cycleRepeat();
-            return;
-          }
-
-          if (action === 'play-song') {
-            const songId = target.dataset.songId;
-            playSongFromId(songId);
-            return;
-          }
-
-          if (action === 'delete-song') {
-            const songId = target.dataset.songId;
-            const playlistId = target.dataset.playlistId;
-            await deleteSong(songId);
-            if (playlistId) { currentPlaylistId = playlistId; }
-            renderAll();
-            return;
-          }
-
-          if (action === 'delete-playlist') {
-            const id = target.dataset.playlistId;
-            await deletePlaylist(id);
-            navigate('/');
-            return;
-          }
-
-          if (action === 'shuffle-play') {
-            const playlistId = target.dataset.playlistId;
-            await playPlaylist(playlistId, true);
-            navigate('/player');
-            return;
-          }
-
-          if (action === 'play-order') {
-            const playlistId = target.dataset.playlistId;
-            await playPlaylist(playlistId, false);
-            navigate('/player');
-            return;
-          }
-
-          if (action === 'auth-submit') {
-            const form = target.closest('form');
-            if (!form) return;
-            const type = form.dataset.type || 'login';
-            const email = form.querySelector('input[name="email"]').value.trim();
-            const password = form.querySelector('input[name="password"]').value;
-            if (type === 'login') {
-              if (!email || !password) {
-                toast('Please enter both email and password.');
-                return;
-              }
-              state.auth = { loggedIn: true, email };
-              persistAuth();
-              navigate('/');
-              renderAll();
-            }
-            if (type === 'register') {
-              if (!email || !password) {
-                toast('Please fill out the form.');
-                return;
-              }
-              state.auth = { loggedIn: true, email };
-              persistAuth();
-              navigate('/');
-              renderAll();
-            }
-            if (type === 'forgot-password') {
-              toast('Reset instructions sent to your inbox.');
-            }
-            if (type === 'reset-password') {
-              toast('Password updated.');
-              navigate('/login');
-            }
-            return;
-          }
-
-          if (action === 'logout') {
-            state.auth = { ...defaultAuth };
-            persistAuth();
-            navigate('/login');
-            renderAll();
-            return;
-          }
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          tabs.forEach((btn) => btn.classList.toggle('active', btn === tab));
+          const isLibrary = tab.dataset.tab === 'library';
+          libraryView.classList.toggle('active', isLibrary);
+          playerView.classList.toggle('active', !isLibrary);
         });
-
-        document.getElementById('file-input')?.addEventListener('change', handleUploads);
-        window.addEventListener('hashchange', renderAll);
-        window.addEventListener('popstate', renderAll);
-      }
-
-      function bindAudioEvents() {
-        audio.addEventListener('timeupdate', () => {
-          state.currentTime = audio.currentTime;
-          renderPlayerBar();
-        });
-
-        audio.addEventListener('loadedmetadata', () => {
-          state.duration = audio.duration || 0;
-          renderPlayerBar();
-        });
-
-        audio.addEventListener('play', () => {
-          state.playing = true;
-          renderPlayerBar();
-        });
-
-        audio.addEventListener('pause', () => {
-          state.playing = false;
-          renderPlayerBar();
-        });
-
-        audio.addEventListener('ended', () => {
-          if (state.repeat === 'one') {
-            audio.currentTime = 0;
-            audio.play();
-            return;
-          }
-          nextTrack();
-        });
-
-        audio.addEventListener('volumechange', () => {
-          state.volume = audio.volume;
-        });
-      }
-
-      function getPath() {
-        return location.hash ? location.hash.replace(/^#/, '') : '/';
-      }
-
-      function navigate(path) {
-        const safe = path.startsWith('/') ? path : `/${path}`;
-        const old = getPath();
-        if (old !== safe) {
-          location.hash = safe;
-        } else {
-          renderAll();
-        }
-      }
-
-      function loadAuth() {
-        try {
-          const raw = localStorage.getItem(authKey);
-          if (!raw) return { ...defaultAuth };
-          const parsed = JSON.parse(raw);
-          return { loggedIn: Boolean(parsed.loggedIn), email: parsed.email || '' };
-        } catch (error) {
-          return { ...defaultAuth };
-        }
-      }
-
-      function persistAuth() {
-        localStorage.setItem(authKey, JSON.stringify(state.auth));
-      }
-
-      async function ensureDb() {
-        if (window.__spotibaiDB) return window.__spotibaiDB;
-        window.__spotibaiDB = await new Promise((resolve, reject) => {
-          const request = indexedDB.open(DB_NAME, 1);
-          request.onupgradeneeded = () => {
-            const db = request.result;
-            if (!db.objectStoreNames.contains('playlists')) {
-              const playlistStore = db.createObjectStore('playlists', { keyPath: 'id' });
-              playlistStore.createIndex('name', 'name', { unique: false });
-            }
-            if (!db.objectStoreNames.contains('songs')) {
-              const songStore = db.createObjectStore('songs', { keyPath: 'id' });
-              songStore.createIndex('playlistId', 'playlistId', { unique: false });
-            }
-          };
-          request.onsuccess = () => resolve(request.result);
-          request.onerror = () => reject(request.error || new Error('IndexedDB failed.'));
-        });
-        return window.__spotibaiDB;
-      }
-
-      function idbStore(storeName, mode = 'readonly') {
-        return ensureDb().then((db) => db.transaction(storeName, mode).objectStore(storeName));
-      }
-
-      async function getPlaylists() {
-        const store = await idbStore('playlists', 'readonly');
-        return await new Promise((resolve, reject) => {
-          const req = store.getAll();
-          req.onsuccess = () => resolve((req.result || []).sort((a, b) => new Date(b.created) - new Date(a.created)));
-          req.onerror = () => reject(req.error || new Error('Failed to read playlists.'));
-        });
-      }
-
-      async function ensurePlaylist(name, id) {
-        const normalized = name.trim();
-        if (!normalized) throw new Error('Playlist name is required.');
-        const store = await idbStore('playlists', 'readwrite');
-        const existing = await new Promise((resolve, reject) => {
-          const req = id ? store.get(id) : store.getAll();
-          req.onsuccess = () => resolve(req.result || null);
-          req.onerror = () => reject(req.error || new Error('Failed to resolve playlist.'));
-        });
-
-        if (existing) {
-          if (existing.id === id || existing.name.toLowerCase() === normalized.toLowerCase()) {
-            return existing;
-          }
-        }
-
-        const playlist = {
-          id: id || crypto.randomUUID(),
-          name: normalized,
-          created: new Date().toISOString(),
-        };
-
-        await new Promise((resolve, reject) => {
-          const req = store.put(playlist);
-          req.onsuccess = () => resolve();
-          req.onerror = () => reject(req.error || new Error('Failed to save playlist.'));
-        });
-
-        return playlist;
-      }
-
-      async function getSongs(playlistId) {
-        const store = await idbStore('songs', 'readonly');
-        return await new Promise((resolve, reject) => {
-          const req = store.index('playlistId').getAll(IDBKeyRange.only(playlistId));
-          req.onsuccess = () => resolve((req.result || []).sort((a, b) => (a.order || 0) - (b.order || 0)));
-          req.onerror = () => reject(req.error || new Error('Failed to read songs.'));
-        });
-      }
-
-      async function addSongs(playlistId, incoming) {
-        const store = await idbStore('songs', 'readwrite');
-        const existing = await getSongs(playlistId);
-        const nextOrder = existing.length;
-        const records = (incoming || []).map((song, index) => ({
-          id: song.id || crypto.randomUUID(),
-          playlistId,
-          title: song.title || 'Untitled',
-          blob: song.blob,
-          order: typeof song.order === 'number' ? song.order : nextOrder + index,
-          created: new Date().toISOString(),
-          mimeType: song.mimeType || 'audio/mpeg',
-          duration: song.duration || null,
-        }));
-
-        for (const record of records) {
-          await new Promise((resolve, reject) => {
-            const req = store.put(record);
-            req.onsuccess = () => resolve();
-            req.onerror = () => reject(req.error || new Error('Failed to store song.'));
-          });
-        }
-        return records;
-      }
-
-      async function deleteSong(songId) {
-        const store = await idbStore('songs', 'readwrite');
-        await new Promise((resolve, reject) => {
-          const req = store.delete(songId);
-          req.onsuccess = () => resolve();
-          req.onerror = () => reject(req.error || new Error('Failed to delete song.'));
-        });
-      }
-
-      async function deletePlaylist(playlistId) {
-        const playlistsStore = await idbStore('playlists', 'readwrite');
-        const songsStore = await idbStore('songs', 'readwrite');
-
-        await new Promise((resolve, reject) => {
-          const req = playlistsStore.delete(playlistId);
-          req.onsuccess = () => resolve();
-          req.onerror = () => reject(req.error || new Error('Failed to delete playlist.'));
-        });
-
-        const songs = await getSongs(playlistId);
-        for (const item of songs) {
-          await new Promise((resolve, reject) => {
-            const req = songsStore.delete(item.id);
-            req.onsuccess = () => resolve();
-            req.onerror = () => reject(req.error || new Error('Failed to delete playlist songs.'));
-          });
-        }
-      }
-
-      async function refreshPlaylists() {
-        state.playlists = await getPlaylists();
-        for (const playlist of state.playlists) {
-          state.songsByPlaylist[playlist.id] = await getSongs(playlist.id);
-        }
-      }
-
-      function renderAll() {
-        const path = getPath();
-        const publicRoutes = ['/login', '/register', '/forgot-password', '/reset-password'];
-
-        if (!state.auth.loggedIn && !publicRoutes.includes(path)) {
-          navigate('/login');
-          return;
-        }
-
-        renderTopbarState();
-        renderSidebar();
-        renderScreen(path);
-        renderPlayerBar();
-        renderBottomNav();
-        renderModal();
-      }
-
-      function renderTopbarState() {
-        const header = document.querySelector('.topbar');
-        if (!header) return;
-        const actions = header.querySelector('.topbar-actions');
-        if (!actions) return;
-
-        const signInState = state.auth.loggedIn ? `Signed in · ${state.auth.email}` : 'Guest mode';
-        const existing = actions.querySelector('[data-signin-state]');
-        if (existing) existing.remove();
-        const label = document.createElement('button');
-        label.type = 'button';
-        label.dataset.signinState = 'true';
-        label.className = 'pill-btn';
-        label.textContent = signInState;
-        label.addEventListener('click', () => renderSettingsModal());
-        actions.insertBefore(label, actions.firstChild);
-      }
-
-      function renderSidebar() {
-        const playlistRoot = document.getElementById('playlist-list');
-        if (!playlistRoot) return;
-        playlistRoot.innerHTML = '';
-
-        state.playlists.forEach((playlist) => {
-          const item = document.createElement('button');
-          item.type = 'button';
-          item.dataset.action = 'goto-playlist';
-          item.dataset.id = playlist.id;
-          item.className = 'playlist-item' + (getPath() === `/playlist/${playlist.id}` ? ' active' : '');
-
-          const songs = state.songsByPlaylist[playlist.id] || [];
-          item.innerHTML = `
-            <div class="playlist-identity">
-              <div class="playlist-badge">${(playlist.name || 'M').charAt(0).toUpperCase()}</div>
-              <div>
-                <div class="playlist-name">${escapeHtml(playlist.name)}</div>
-                <div class="playlist-meta">${songs.length} songs</div>
-              </div>
-            </div>
-            <div class="playlist-meta">›</div>
-          `;
-          playlistRoot.appendChild(item);
-        });
-      }
-
-      function renderScreen(path) {
-        const root = document.getElementById('screen-root');
-        if (!root) return;
-
-        if (path === '/login') {
-          root.innerHTML = authScreen('login');
-          return;
-        }
-        if (path === '/register') {
-          root.innerHTML = authScreen('register');
-          return;
-        }
-        if (path === '/forgot-password') {
-          root.innerHTML = authScreen('forgot-password');
-          return;
-        }
-        if (path === '/reset-password') {
-          root.innerHTML = authScreen('reset-password');
-          return;
-        }
-
-        if (path === '/player') {
-          root.innerHTML = renderPlayerView();
-          return;
-        }
-
-        if (path.startsWith('/playlist/')) {
-          const id = path.replace('/playlist/', '');
-          const playlist = state.playlists.find((item) => item.id === id);
-          if (!playlist) {
-            root.innerHTML = emptyLibrary();
-            return;
-          }
-          root.innerHTML = renderPlaylistView(playlist);
-          return;
-        }
-
-        root.innerHTML = renderLibraryView();
-      }
-
-      function authScreen(type) {
-        const config = {
-          login: { title: 'Welcome back', button: 'Sign in', linker: 'Create account', linkRoute: '/register' },
-          register: { title: 'Create your account', button: 'Register', linker: 'Already have an account?', linkRoute: '/login' },
-          'forgot-password': { title: 'Reset your password', button: 'Send reset link', linker: 'Back to login', linkRoute: '/login' },
-          'reset-password': { title: 'Set a new password', button: 'Update password', linker: 'Back to login', linkRoute: '/login' },
-        };
-
-        const c = config[type];
-        return `
-          <div class="auth-shell">
-            <div class="auth-card">
-              <div class="auth-header">
-                <div class="brand-mark" aria-hidden="true" style="width:26px;height:26px;">
-                  <span></span><span></span><span></span><span></span>
-                </div>
-                <div class="section-title" style="padding:0; letter-spacing:0; text-transform:none; font-size:12px;">Spotibai</div>
-              </div>
-              <h2>${c.title}</h2>
-              <form class="auth-form" data-type="${type}">
-                ${(type === 'login' || type === 'register') ? `
-                  <div class="field">
-                    <label for="auth-email">Email</label>
-                    <input id="auth-email" name="email" type="email" placeholder="you@example.com" value="${state.auth.email || ''}" required />
-                  </div>
-                  <div class="field">
-                    <label for="auth-password">Password</label>
-                    <input id="auth-password" name="password" type="password" placeholder="••••••••" required />
-                  </div>
-                ` : ''}
-
-                ${(type === 'forgot-password' || type === 'reset-password') ? `
-                  <div class="field">
-                    <label for="auth-email">Email</label>
-                    <input id="auth-email" name="email" type="email" placeholder="you@example.com" value="${state.auth.email || ''}" required />
-                  </div>
-                ` : ''}
-
-                ${(type === 'reset-password') ? `
-                  <div class="field">
-                    <label for="new-password">New password</label>
-                    <input id="new-password" name="new-password" type="password" placeholder="••••••••" required />
-                  </div>
-                ` : ''}
-
-                ${(type === 'forgot-password') ? `
-                  <div class="auth-link-row">
-                    <span></span>
-                    <span class="small-link" data-action="goto-link" data-url="/login">Back to login</span>
-                  </div>
-                ` : ''}
-
-                <button class="primary-btn" type="submit" data-action="auth-submit">${c.button}</button>
-                <div class="auth-link-row">
-                  <span></span>
-                  <span class="small-link" data-action="goto-link" data-url="${c.linkRoute}">${c.linker}</span>
-                </div>
-              </form>
-            </div>
-          </div>
-        `;
-      }
-
-      function renderLibraryView() {
-        if (!state.playlists.length) {
-          return emptyLibrary();
-        }
-
-        return `
-          <div class="screen">
-            <div class="pull-to-refresh" id="pull-refresh-indicator"><div class="pull-spinner" id="pull-spinner"></div></div>
-            <div class="empty-card" style="padding:18px 18px 0;background:none;border:none;box-shadow:none;">
-              <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;">
-                <div>
-                  <div class="section-title" style="padding:0; margin-bottom:6px;">Library</div>
-                  <h2 style="margin:0; font-size: clamp(2rem, 4vw, 2.75rem); letter-spacing:-0.06em;">Your music, offline</h2>
-                </div>
-                <label class="primary-btn" for="file-input" style="display:inline-flex;align-items:center;justify-content:center;">
-                  Upload
-                </label>
-              </div>
-            </div>
-
-            <div class="song-list">
-              ${state.playlists.map((playlist) => {
-                const songs = state.songsByPlaylist[playlist.id] || [];
-                return `
-                  <div class="song-row" data-action="goto-playlist" data-id="${playlist.id}" style="cursor:pointer;">
-                    <div class="song-cover">${(playlist.name || 'M').charAt(0).toUpperCase()}</div>
-                    <div class="song-info">
-                      <div class="song-title">${escapeHtml(playlist.name)}</div>
-                      <div class="song-sub">${songs.length} tracks · ${formatTimeAgo(playlist.created)}</div>
-                    </div>
-                    <div class="song-sub">Playlist</div>
-                    <div class="song-actions">
-                      <button class="mini-btn" type="button" data-action="play-order" data-playlist-id="${playlist.id}" title="Play in order">▶</button>
-                    </div>
-                  </div>
-                `;
-              }).join('')}
-            </div>
-          </div>
-        `;
-      }
-
-      function emptyLibrary() {
-        return `
-          <div class="screen empty-state">
-            <div class="empty-card">
-              <div class="brand-mark" style="margin:0 auto 18px; width:40px; height:40px;">
-                <span></span><span></span><span></span><span></span>
-              </div>
-              <h1>Your music, offline</h1>
-              <p>Import your own audio files or a ZIP archive. Everything stays on your device in IndexedDB and works without an internet connection after the first load.</p>
-              <div class="empty-actions">
-                <label class="primary-btn" for="file-input">Upload .mp3 / .zip</label>
-                <button class="pill-btn" type="button" data-action="nav-player">Open player</button>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      function renderPlaylistView(playlist) {
-        const songs = state.songsByPlaylist[playlist.id] || [];
-        return `
-          <div class="screen">
-            <div class="playlist-header">
-              <div class="playlist-header-inner">
-                <div class="header-top">
-                  <button class="back-btn" type="button" data-action="back-to-library">← Library</button>
-                  <button class="icon-btn" type="button" data-action="delete-playlist" data-playlist-id="${playlist.id}" aria-label="Delete playlist">Delete</button>
-                </div>
-
-                <div class="playlist-name-block">
-                  <div>
-                    <div class="meta-row"><span>Playlist</span></div>
-                    <h2>${escapeHtml(playlist.name)}</h2>
-                    <div class="meta-row">
-                      <span>${songs.length} tracks</span>
-                      <span>•</span>
-                      <span>${formatTimeAgo(playlist.created)}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="playlist-actions">
-                  <button class="primary-btn" type="button" data-action="shuffle-play" data-playlist-id="${playlist.id}">Shuffle play</button>
-                  <button class="pill-btn" type="button" data-action="play-order" data-playlist-id="${playlist.id}">Play in order</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="song-list">
-              ${songs.length ? songs.map((song, index) => `
-                <div class="song-row">
-                  <div class="song-cover">${song.title.slice(0, 2).toUpperCase()}</div>
-                  <div class="song-info">
-                    <div class="song-title">${escapeHtml(song.title)}</div>
-                    <div class="song-sub">${song.mimeType || 'audio'}</div>
-                  </div>
-                  <div class="song-sub">${index + 1}</div>
-                  <div class="song-actions">
-                    <button class="mini-btn" type="button" data-action="play-song" data-song-id="${song.id}" title="Play">▶</button>
-                    <button class="mini-btn" type="button" data-action="delete-song" data-song-id="${song.id}" data-playlist-id="${playlist.id}" title="Delete">✕</button>
-                  </div>
-                </div>
-              `).join('') : `
-                <div class="empty-card" style="margin-top:16px; padding:18px;">
-                  <p style="margin:0; color:var(--muted);">No songs yet in this playlist. Upload some audio to get started.</p>
-                </div>
-              `}
-            </div>
-          </div>
-        `;
-      }
-
-      function renderPlayerView() {
-        const song = state.currentSong || { title: 'No track selected', artist: 'Spotibai' };
-        return `
-          <div class="screen" style="display:flex;align-items:center;justify-content:center;padding-top:16px;">
-            <div style="width:min(520px,100%); background: rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.05); border-radius:26px; padding:18px; box-shadow: var(--shadow); animation: fadeInUp 0.35s ease;">
-              <div style="width:100%; aspect-ratio:1; border-radius:22px; background:linear-gradient(135deg, rgba(30,215,96,0.35), rgba(30,215,96,0.08)); display:grid; place-items:center; font-size:3rem; font-weight:900; color: var(--green); margin-bottom:18px;">♪</div>
-              <h2 style="margin:0; font-size:clamp(2rem, 6vw, 2.8rem); letter-spacing:-0.06em;">${escapeHtml(song.title)}</h2>
-              <div style="color:var(--muted); margin-top:8px;">${escapeHtml(song.artist || 'Offline library')}</div>
-              <div style="margin-top:18px; display:flex; align-items:center; gap:10px;">
-                <span style="font-size:13px; color:var(--muted);">${formatTime(state.currentTime)}</span>
-                <input class="slider" type="range" min="0" max="${state.duration || 0}" step="0.1" value="${state.currentTime}" aria-label="Playback progress" />
-                <span style="font-size:13px; color:var(--muted);">${formatTime(state.duration)}</span>
-              </div>
-              <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-top:22px;">
-                <button class="transport-btn" type="button" data-action="shuffle-toggle" title="Shuffle">⇄</button>
-                <button class="transport-btn" type="button" data-action="prev-track" title="Previous">⏮</button>
-                <button class="transport-btn primary" type="button" data-action="toggle-play" title="Play / pause">${state.playing ? '❚❚' : '▶'}</button>
-                <button class="transport-btn" type="button" data-action="next-track" title="Next">⏭</button>
-                <button class="transport-btn" type="button" data-action="repeat-cycle" title="Repeat">${state.repeat === 'one' ? '1' : state.repeat === 'all' ? '↻' : '∞'}</button>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      function renderPlayerBar() {
-        const root = document.getElementById('player-bar-root');
-        if (!root) return;
-        if (!state.currentSong) {
-          root.innerHTML = '';
-          return;
-        }
-
-        root.innerHTML = `
-          <div class="player-bar">
-            <div class="player-bar-inner">
-              <div class="track-art">♪</div>
-              <div class="track-info">
-                <div class="track-title">${escapeHtml(state.currentSong.title)}</div>
-                <div class="track-sub">${escapeHtml(state.currentSong.artist || 'Offline library')}</div>
-              </div>
-
-              <div class="transport">
-                <button class="transport-btn" type="button" data-action="prev-track" aria-label="Previous track">⏮</button>
-                <button class="transport-btn primary" type="button" data-action="toggle-play" aria-label="Toggle play state">${state.playing ? '❚❚' : '▶'}</button>
-                <button class="transport-btn" type="button" data-action="next-track" aria-label="Next track">⏭</button>
-              </div>
-
-              <div class="seek-wrap">
-                <span style="font-size:12px;color:var(--muted);">${formatTime(state.currentTime)}</span>
-                <input type="range" min="0" max="${Math.max(state.duration, 0)}" step="0.1" value="${state.currentTime}" aria-label="Playback position" />
-                <span style="font-size:12px;color:var(--muted);">${formatTime(state.duration)}</span>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      function renderBottomNav() {
-        const tabs = document.querySelectorAll('.bottom-tab');
-        tabs.forEach((tab) => {
-          const action = tab.dataset.action;
-          const active = action === 'nav-library' ? (getPath() === '/' || getPath().startsWith('/playlist/')) : getPath() === '/player';
-          tab.classList.toggle('active', active);
-        });
-      }
-
-      function renderModal() {
-        if (!state.modal) {
-          const old = document.querySelector('.modal-backdrop');
-          if (old) old.remove();
-          return;
-        }
-
-        const container = document.createElement('div');
-        container.className = 'modal-backdrop';
-        container.innerHTML = state.modal; 
-        document.body.appendChild(container);
-      }
-
-      function renderSettingsModal() {
-        state.modal = `
-          <div class="modal">
-            <h3>Account</h3>
-            <p>${state.auth.loggedIn ? escapeHtml(state.auth.email) : 'Not signed in'}</p>
-            <div class="modal-actions">
-              <button class="pill-btn" type="button" data-action="close-modal">Close</button>
-              <button class="pill-btn" type="button" data-action="sign-out">Sign out</button>
-              <button class="danger-btn" type="button" data-action="delete-account">Delete Account</button>
-            </div>
-          </div>
-        `;
-        renderAll();
-      }
-
-      function renderConfirmDeleteAccount() {
-        state.modal = `
-          <div class="modal">
-            <h3>Delete account?</h3>
-            <p>This removes your account from the backend and signs you out. This action cannot be undone.</p>
-            <div class="modal-actions">
-              <button class="pill-btn" type="button" data-action="close-modal">Cancel</button>
-              <button class="danger-btn" type="button" data-action="confirm-delete-account">Delete Account</button>
-            </div>
-          </div>
-        `;
-        renderAll();
-      }
-
-      function togglePlayback() {
-        if (!state.currentSong) return;
-        if (audio.paused) {
-          audio.play();
-        } else {
-          audio.pause();
-        }
-      }
-
-      function cycleRepeat() {
-        const order = ['off', 'all', 'one'];
-        const idx = order.indexOf(state.repeat);
-        state.repeat = order[(idx + 1) % order.length];
-        renderAll();
-      }
-
-      function applyShuffleQueue() {
-        if (!state.queue.length) return;
-        const currentSong = state.queue[state.currentIndex];
-        const remaining = state.queue.filter((song) => song.id !== currentSong.id);
-        const shuffled = [currentSong, ...shuffleArray(remaining)];
-        state.queue = shuffled;
-        state.currentIndex = 0;
-        syncAudioFromQueue();
-      }
-
-      function restoreQueueOrder() {
-        if (!state.queue.length) return;
-        const current = state.queue[0];
-        const original = state.queue.slice(1);
-        state.queue = [current, ...original];
-        state.currentIndex = 0;
-        syncAudioFromQueue();
-      }
-
-      function shuffleArray(list) {
-        const copy = [...list];
-        for (let i = copy.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [copy[i], copy[j]] = [copy[j], copy[i]];
-        }
-        return copy;
-      }
-
-      async function playPlaylist(playlistId, shuffle = false) {
-        const songs = state.songsByPlaylist[playlistId] || [];
-        if (!songs.length) {
-          toast('This playlist is empty.');
-          return;
-        }
-
-        let queue = [...songs];
-        if (shuffle) {
-          queue = [queue[0], ...shuffleArray(queue.slice(1))];
-        }
-
-        state.queue = queue;
-        state.currentIndex = 0;
-        state.shuffle = shuffle;
-        state.currentSong = queue[0];
-        await loadSongBlob(queue[0]);
-        audio.play();
-        renderAll();
-      }
-
-      async function playSongFromId(songId) {
-        const allSongs = Object.values(state.songsByPlaylist).flat();
-        const song = allSongs.find((item) => item.id === songId);
-        if (!song) return;
-        state.queue = allSongs;
-        state.currentIndex = allSongs.findIndex((item) => item.id === songId);
-        state.currentSong = song;
-        await loadSongBlob(song);
-        audio.play();
-        renderAll();
-      }
-
-      async function loadSongBlob(song) {
-        if (!song || !song.blob) return;
-        if (audio.src && audio.src.startsWith('blob:')) {
-          URL.revokeObjectURL(audio.src);
-        }
-        const url = URL.createObjectURL(song.blob);
-        audio.src = url;
-        audio.load();
-        state.currentSong = song;
-        state.currentTime = 0;
-        state.duration = 0;
-        updateMediaSession(song.title);
-      }
-
-      function updateMediaSession(title) {
-        if ('mediaSession' in navigator) {
-          navigator.mediaSession.metadata = new MediaMetadata({
-            title: title || 'Spotibai',
-            artist: 'Offline library',
-            album: 'Spotibai',
-          });
-          navigator.mediaSession.setActionHandler('play', () => audio.play());
-          navigator.mediaSession.setActionHandler('pause', () => audio.pause());
-          navigator.mediaSession.setActionHandler('previoustrack', prevTrack);
-          navigator.mediaSession.setActionHandler('nexttrack', nextTrack);
-        }
-      }
-
-      function syncAudioFromQueue() {
-        if (!state.queue.length) return;
-        const song = state.queue[state.currentIndex] || state.queue[0];
-        state.currentSong = song;
-        loadSongBlob(song);
-      }
-
-      function nextTrack() {
-        if (!state.queue.length) return;
-        const nextIndex = (state.currentIndex + 1) % state.queue.length;
-        state.currentIndex = nextIndex;
-        const nextSong = state.queue[nextIndex];
-        state.currentSong = nextSong;
-        loadSongBlob(nextSong);
-        audio.play();
-        renderAll();
-      }
-
-      function prevTrack() {
-        if (!state.queue.length) return;
-        if (audio.currentTime > 3) {
-          audio.currentTime = 0;
-          return;
-        }
-        const prevIndex = (state.currentIndex - 1 + state.queue.length) % state.queue.length;
-        state.currentIndex = prevIndex;
-        const prevSong = state.queue[prevIndex];
-        state.currentSong = prevSong;
-        loadSongBlob(prevSong);
-        audio.play();
-        renderAll();
-      }
-
-      function formatTime(seconds) {
-        if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
-        const mins = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60)
-          .toString()
-          .padStart(2, '0');
-        return `${mins}:${secs}`;
-      }
-
-      function formatTimeAgo(dateString) {
-        if (!dateString) return 'Recently';
-        const diff = Date.now() - new Date(dateString).getTime();
-        const days = Math.max(1, Math.floor(diff / (1000 * 60 * 60 * 24)));
-        if (days < 2) return 'Today';
-        return `${days} days ago`;
-      }
-
-      function escapeHtml(str) {
-        return String(str)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#039;');
-      }
-
-      function toast(message, ms = 2200) {
-        const toastEl = document.createElement('div');
-        toastEl.className = 'toast show';
-        toastEl.textContent = message;
-        document.body.appendChild(toastEl);
-        setTimeout(() => toastEl.classList.remove('show'), ms);
-        setTimeout(() => toastEl.remove(), ms + 200);
-      }
-
-      async function handleUploads(event) {
-        const files = [...(event.target.files || [])];
-        if (!files.length) return;
-        if (importInFlight) return;
-        importInFlight = true;
-
-        try {
-          const userRootPlaylist = await ensurePlaylist('My Songs', 'my-songs');
-          let createdPlaylistId = null;
-          const results = [];
-
-          for (const file of files) {
-            if (isZipFile(file.name)) {
-              const playlist = await ensurePlaylist(stripZipExtension(file.name), crypto.randomUUID());
-              const songs = await parseZipSongs(file);
-              const mapped = songs.map((song, index) => ({ ...song, title: sanitizeTitle(song.title), order: index, mimeType: inferMime(song.title) }));
-              await addSongs(playlist.id, mapped);
-              results.push({ playlistId: playlist.id, playlistName: playlist.name });
-              createdPlaylistId = playlist.id;
-            } else if (isAudioFile(file.name)) {
-              const sanitized = sanitizeTitle(file.name);
-              results.push({ title: sanitized, blob: file, mimeType: inferMime(file.name) });
-            }
-          }
-
-          if (results.some((entry) => entry.blob)) {
-            const audioSongs = results.filter((entry) => entry.blob).map((song, index) => ({
-              id: crypto.randomUUID(),
-              title: sanitizeTitle(song.title),
-              blob: song.blob,
-              order: index,
-              mimeType: song.mimeType || inferMime(song.title),
-            }));
-            await addSongs(userRootPlaylist.id, audioSongs);
-          }
-
-          await refreshPlaylists();
-          if (createdPlaylistId) navigate(`/playlist/${createdPlaylistId}`);
-          else navigate('/');
-          toast('Import complete.');
-        } catch (error) {
-          console.error(error);
-          state.importError = error.message || 'Import failed.';
-          toast(state.importError);
-        } finally {
-          importInFlight = false;
-          event.target.value = '';
-          renderAll();
-        }
-      }
-
-      async function parseZipSongs(file) {
-        const arrayBuffer = await file.arrayBuffer();
-        const view = new DataView(arrayBuffer);
-        const entries = []; 
-        const eocd = findEocd(view);
-        if (!eocd) throw new Error('Invalid ZIP archive.');
-
-        for (let offset = eocd.centralDirectoryOffset; offset < eocd.centralDirectoryOffset + eocd.centralDirectorySize; ) {
-          const signature = view.getUint32(offset, true);
-          if (signature !== 0x02014b50) break;
-          const fileNameLen = view.getUint16(offset + 28, true);
-          const extraLen = view.getUint16(offset + 30, true);
-          const commentLen = view.getUint16(offset + 32, true);
-          const compMethod = view.getUint16(offset + 10, true);
-          const compressedSize = view.getUint32(offset + 20, true);
-          const uncompressedSize = view.getUint32(offset + 24, true);
-          const localHeaderOffset = view.getUint32(offset + 42, true);
-          const nameBytes = new Uint8Array(arrayBuffer.slice(offset + 46, offset + 46 + fileNameLen));
-          const fileName = decodeZipPath(nameBytes);
-          const entry = {
-            name: fileName,
-            method: compMethod,
-            compressedSize,
-            uncompressedSize,
-            localHeaderOffset,
-          };
-          entries.push(entry);
-          offset += 46 + fileNameLen + extraLen + commentLen;
-        }
-
-        const audioEntries = entries.filter((entry) => isAudioFile(entry.name));
-        const cleanItems = audioEntries.filter((entry) => !entry.name.includes('__MACOSX') && !entry.name.includes('/__MACOSX') && !entry.name.includes('/._') && !entry.name.startsWith('._'));
-
-        return await Promise.all(cleanItems.map(async (entry) => {
-          const blob = await readZipEntryBlob(file, entry);
-          return {
-            id: crypto.randomUUID(),
-            title: sanitizeTitle(entry.name),
-            blob,
-            mimeType: inferMime(entry.name),
-          };
-        }));
-      }
-
-      function findEocd(view) {
-        const maxScan = Math.min(view.byteLength, 65535 + 22);
-        for (let i = view.byteLength - 22; i >= Math.max(0, view.byteLength - maxScan); i--) {
-          if (view.getUint32(i, true) !== 0x06054b50) continue;
-          const diskNo = view.getUint16(i + 4, true);
-          const centralCount = view.getUint16(i + 10, true);
-          const centralSize = view.getUint32(i + 12, true);
-          const cdOffset = view.getUint32(i + 16, true);
-          if (diskNo === 0 && centralCount > 0) {
-            return { centralDirectoryOffset: cdOffset, centralDirectorySize: centralSize };
-          }
-        }
-        return null;
-      }
-
-      async function readZipEntryBlob(file, entry) {
-        const source = await file.arrayBuffer();
-        const view = new DataView(source);
-        const headerOffset = entry.localHeaderOffset;
-        const fileNameLen = view.getUint16(headerOffset + 26, true);
-        const extraLen = view.getUint16(headerOffset + 28, true);
-        const dataOffset = headerOffset + 30 + fileNameLen + extraLen;
-        const compressedBytes = new Uint8Array(source.slice(dataOffset, dataOffset + entry.compressedSize));
-
-        let payload;
-        if (entry.method === 0) {
-          payload = compressedBytes;
-        } else if (entry.method === 8) {
-          const blob = new Blob([compressedBytes]);
-          const decompressed = await new Response(blob.stream().pipeThrough(new DecompressionStream('deflate'))).arrayBuffer();
-          payload = new Uint8Array(decompressed);
-        } else {
-          throw new Error(`ZIP compression method ${entry.method} is not supported.`);
-        }
-
-        return new Blob([payload], { type: inferMime(entry.name) });
-      }
-
-      function stripZipExtension(name) {
-        return name.replace(/\.zip$/i, '').replace(/\.(ZIP)$/i, '') || 'Archive';
-      }
-
-      function sanitizeTitle(name) {
-        const base = name.split('/').pop().replace(/\.[^/.]+$/, '');
-        return base.replace(/^\.+/, '').replace(/[_-]+/g, ' ').trim() || 'Untitled';
-      }
-
-      function decodeZipPath(bytes) {
-        try {
-          return new TextDecoder('utf-8').decode(bytes);
-        } catch (error) {
-          return Array.from(bytes).map((b) => String.fromCharCode(b)).join('');
-        }
-      }
-
-      function isZipFile(name) {
-        return /\.zip$/i.test(name);
-      }
-
-      function isAudioFile(name) {
-        return /\.(mp3|m4a|flac|wav|ogg|aac|opus)$/i.test(name);
-      }
-
-      function inferMime(name) {
-        const ext = (name.split('.').pop() || '').toLowerCase();
-        const map = {
-          mp3: 'audio/mpeg',
-          m4a: 'audio/mp4',
-          flac: 'audio/flac',
-          wav: 'audio/wav',
-          ogg: 'audio/ogg',
-          aac: 'audio/aac',
-          opus: 'audio/opus',
-        };
-        return map[ext] || 'audio/mpeg';
-      }
-
-      async function deleteAccount() {
-        try {
-          const response = await Promise.resolve({ ok: true });
-          if (!response.ok) throw new Error('Delete failed.');
-          state.auth = { ...defaultAuth };
-          localStorage.removeItem(authKey);
-          state.modal = null;
-          navigate('/login');
-          toast('Account deleted.');
-          renderAll();
-        } catch (error) {
-          toast(error.message || 'Could not delete account.');
-        }
-      }
-
-      function bindDocumentActions() {
-        document.addEventListener('click', (event) => {
-          const actionTarget = event.target.closest('[data-action="goto-link"]');
-          if (actionTarget) {
-            const url = actionTarget.dataset.url;
-            navigate(url);
-          }
-        });
-      }
-
-      bindDocumentActions();
-      mountApp();
-      ensureDb().then(async () => {
-        await refreshPlaylists();
-        if (!initialAppInit) {
-          initialAppInit = true;
-          renderAll();
-        }
       });
-
-      if (!window.__spotibaiAppStarted) {
-        window.__spotibaiAppStarted = true;
-      }
     </script>
   </body>
 </html>
