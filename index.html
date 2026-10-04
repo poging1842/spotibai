@@ -8,19 +8,15 @@
     <style>
       :root {
         --bg: #090909;
-        --bg-2: #111113;
-        --panel: #1a1a1d;
-        --panel-2: #1d1d20;
-        --panel-3: #2a2a2e;
-        --text: #f5f5f5;
-        --muted: #c7c7cb;
-        --muted-2: #8a8a8d;
+        --panel: #101112;
+        --panel-soft: rgba(255,255,255,0.06);
         --line: rgba(255,255,255,0.12);
+        --text: #f5f5f5;
+        --muted: rgba(255,255,255,0.74);
         --green: #1ed760;
-        --green-2: #18c65a;
-        --green-soft: rgba(30,215,96,0.16);
-        --white: #ffffff;
-        --shadow: 0 16px 30px rgba(0,0,0,0.35);
+        --green-deep: #0fae58;
+        --track: rgba(255,255,255,0.24);
+        --shadow: 0 20px 35px rgba(0,0,0,0.35);
       }
 
       * { box-sizing: border-box; }
@@ -68,25 +64,11 @@
         color: #f0f0f0;
       }
 
-      .statusbar-left {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
       .statusbar-right {
         display: flex;
         align-items: center;
         gap: 5px;
         font-size: 11px;
-      }
-
-      .signal {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 9px;
-        opacity: 0.9;
       }
 
       .signal-bars {
@@ -108,12 +90,6 @@
       .signal-bars span:nth-child(3) { height: 8px; }
       .signal-bars span:nth-child(4) { height: 10px; }
       .signal-bars span:nth-child(5) { height: 12px; }
-
-      .battery-wrap {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-      }
 
       .battery {
         width: 22px;
@@ -137,7 +113,7 @@
       .battery::before {
         content: "";
         position: absolute;
-        inset: 1px 1px 1px 1px;
+        inset: 1px;
         border-radius: 2px;
         background: linear-gradient(90deg, #f7f7f7 100%, #f7f7f7 100%);
       }
@@ -250,6 +226,7 @@
         background: #0a0a0a;
         border-top: 1px solid rgba(255,255,255,0.1);
         min-height: calc(100vh - 138px);
+        position: relative;
       }
 
       .app-header {
@@ -288,7 +265,15 @@
       .logo::before { left: 6px; height: 12px; }
       .logo span { left: 12px; height: 16px; }
       .logo::after { left: 18px; height: 20px; }
-      .logo .bar-last { left: 24px; height: 14px; }
+      .bar-last {
+        position: absolute;
+        left: 24px;
+        width: 5px;
+        height: 14px;
+        bottom: 7px;
+        border-radius: 999px;
+        background: rgba(0,0,0,0.9);
+      }
 
       .brand-name {
         font-size: 42px;
@@ -337,7 +322,7 @@
         justify-content: flex-start;
         gap: 12px;
         width: 100%;
-        height: 70px;
+        min-height: 70px;
         background: rgba(255,255,255,0.08);
         border: 1px solid rgba(255,255,255,0.04);
         border-radius: 16px;
@@ -353,6 +338,72 @@
         font-size: 36px;
         line-height: 1;
         font-weight: 300;
+      }
+
+      .song-list {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .song-row {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 14px;
+        padding: 10px 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+      }
+
+      .song-thumb {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(30,215,96,.35), rgba(30,215,96,.12));
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        color: var(--green);
+      }
+
+      .song-meta {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .song-title {
+        font-size: 17px;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .song-sub {
+        font-size: 12px;
+        color: rgba(255,255,255,0.68);
+      }
+
+      .play-chip {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.02);
+        position: relative;
+      }
+
+      .play-chip::before {
+        content: "";
+        position: absolute;
+        left: 13px;
+        top: 9px;
+        border-top: 8px solid transparent;
+        border-left: 12px solid rgba(255,255,255,0.9);
+        border-bottom: 8px solid transparent;
       }
 
       .player-card {
@@ -383,7 +434,7 @@
         box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
       }
 
-      .mini-art .note {
+      .note {
         width: 24px;
         height: 24px;
         position: relative;
@@ -415,9 +466,9 @@
 
       .mini-track {
         flex: 1;
-        font-size: 28px;
+        font-size: 18px;
         font-weight: 700;
-        letter-spacing: -0.05em;
+        letter-spacing: -0.04em;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -489,6 +540,15 @@
         border-left: 16px solid rgba(0,0,0,0.9);
         border-bottom: 10px solid transparent;
         margin-left: 4px;
+      }
+
+      .play-btn.pause::before {
+        width: 14px;
+        height: 18px;
+        border: none;
+        background: rgba(0,0,0,0.9);
+        box-shadow: 11px 0 0 rgba(0,0,0,0.9);
+        margin-left: 0;
       }
 
       .page-tabs {
@@ -762,6 +822,15 @@
         border-bottom: 15px solid transparent;
       }
 
+      .play-main.pause::before {
+        left: 24px;
+        width: 10px;
+        height: 28px;
+        border: 0;
+        background: rgba(0,0,0,0.92);
+        box-shadow: 14px 0 0 rgba(0,0,0,0.92);
+      }
+
       .repeat-icon {
         position: relative;
         width: 24px;
@@ -791,22 +860,21 @@
         transform: rotate(155deg);
       }
 
-      @media (min-width: 600px) {
-        .phone-shell {
-          min-height: 100vh;
-        }
+      @media (max-width: 380px) {
+        .mini-track { font-size: 16px; }
+        .brand-name { font-size: 34px; }
       }
     </style>
   </head>
   <body>
     <div class="phone-shell">
       <div class="statusbar">
-        <div class="statusbar-left">5:20 AM</div>
+        <div>5:20 AM</div>
         <div class="statusbar-right">
-          <div class="signal"><div class="signal-bars"><span></span><span></span><span></span><span></span><span></span></div></div>
+          <div class="signal-bars"><span></span><span></span><span></span><span></span><span></span></div>
           <div style="font-size:10px; padding-left:4px;">N</div>
           <div style="font-size:10px;">5G</div>
-          <div class="battery-wrap"><div class="battery"></div></div>
+          <div class="battery"></div>
         </div>
       </div>
 
@@ -824,7 +892,7 @@
           <div class="brand-wrap">
             <div class="logo" aria-label="Spotibai logo">
               <span></span>
-              <div class="bar-last" style="position:absolute;left:24px;width:5px;height:14px;bottom:7px;border-radius:999px;background:rgba(0,0,0,0.9);"></div>
+              <div class="bar-last"></div>
             </div>
             <div class="brand-name">Spotibai</div>
           </div>
@@ -834,10 +902,12 @@
         <div id="libraryView" class="view active">
           <div class="library-panel">
             <div class="section-title">Your Library</div>
-            <button class="upload-btn" type="button">
+            <label class="upload-btn" for="fileInput">
               <span class="plus">＋</span>
               <span>Upload songs or zip</span>
-            </button>
+            </label>
+            <input id="fileInput" type="file" accept=".zip,audio/*" multiple hidden />
+            <div id="songList" class="song-list"></div>
           </div>
         </div>
 
@@ -846,18 +916,18 @@
             <div class="player-art">
               <div class="note"></div>
             </div>
-            <div class="player-title">Nothing playing</div>
+            <div id="playerTitle" class="player-title">Nothing playing</div>
             <div class="slider-row">
-              <span class="time-text">0:00</span>
-              <input class="slider" type="range" value="0" />
-              <span class="time-text">0:00</span>
+              <span id="currentTimeText" class="time-text">0:00</span>
+              <input id="seekBar" class="slider" type="range" min="0" max="100" value="0" />
+              <span id="durationText" class="time-text">0:00</span>
             </div>
 
             <div class="player-controls">
               <div class="control-icon shuffle-icon" aria-label="Shuffle"></div>
-              <div class="prev-control" aria-label="Previous"></div>
-              <div class="play-main" aria-label="Play"></div>
-              <div class="next-control" aria-label="Next"></div>
+              <div class="prev-control" id="prevBtn" aria-label="Previous"></div>
+              <div class="play-main" id="bigPlayBtn" aria-label="Play"></div>
+              <div class="next-control" id="nextBtn" aria-label="Next"></div>
               <div class="repeat-icon" aria-label="Repeat"></div>
             </div>
           </div>
@@ -866,11 +936,11 @@
         <div class="player-card" aria-label="Now playing summary">
           <div class="mini-player">
             <div class="mini-art"><div class="note"></div></div>
-            <div class="mini-track">Nothing playing</div>
+            <div id="miniTrackText" class="mini-track">Nothing playing</div>
             <div class="controls">
-              <button class="prev" type="button" aria-label="Previous track" style="width:32px;height:32px;"></button>
-              <button class="play-btn" type="button" aria-label="Play" style="width:52px;height:52px;"></button>
-              <button class="next" type="button" aria-label="Next track" style="width:32px;height:32px;"></button>
+              <button class="prev" id="miniPrev" type="button" aria-label="Previous track" style="width:32px;height:32px;"></button>
+              <button class="play-btn" id="miniPlayBtn" type="button" aria-label="Play" style="width:52px;height:52px;"></button>
+              <button class="next" id="miniNext" type="button" aria-label="Next track" style="width:32px;height:32px;"></button>
             </div>
           </div>
         </div>
@@ -889,18 +959,369 @@
     </div>
 
     <script>
+      const DB_NAME = 'spotibai-db';
+      const STORE_NAME = 'songs';
+      const audio = new Audio();
+      const state = {
+        songs: [],
+        currentIndex: -1,
+        playing: false,
+        isShuffle: false,
+        loop: false,
+      };
+
       const tabs = document.querySelectorAll('.tab');
       const libraryView = document.getElementById('libraryView');
       const playerView = document.getElementById('playerView');
+      const songListEl = document.getElementById('songList');
+      const fileInput = document.getElementById('fileInput');
+      const seekBar = document.getElementById('seekBar');
+      const currentTimeText = document.getElementById('currentTimeText');
+      const durationText = document.getElementById('durationText');
+      const playerTitle = document.getElementById('playerTitle');
+      const miniTrackText = document.getElementById('miniTrackText');
+      const bigPlayBtn = document.getElementById('bigPlayBtn');
+      const miniPlayBtn = document.getElementById('miniPlayBtn');
 
       tabs.forEach((tab) => {
         tab.addEventListener('click', () => {
           tabs.forEach((btn) => btn.classList.toggle('active', btn === tab));
-          const isLibrary = tab.dataset.tab === 'library';
-          libraryView.classList.toggle('active', isLibrary);
-          playerView.classList.toggle('active', !isLibrary);
+          const showLibrary = tab.dataset.tab === 'library';
+          libraryView.classList.toggle('active', showLibrary);
+          playerView.classList.toggle('active', !showLibrary);
         });
       });
+
+      document.getElementById('miniPrev').addEventListener('click', prevTrack);
+      document.getElementById('miniNext').addEventListener('click', nextTrack);
+      document.getElementById('prevBtn').addEventListener('click', prevTrack);
+      document.getElementById('nextBtn').addEventListener('click', nextTrack);
+      bigPlayBtn.addEventListener('click', togglePlayback);
+      miniPlayBtn.addEventListener('click', togglePlayback);
+
+      fileInput.addEventListener('change', handleFiles);
+      seekBar.addEventListener('input', (event) => {
+        if (!audio.duration) return;
+        audio.currentTime = Number(event.target.value);
+      });
+
+      audio.addEventListener('timeupdate', () => {
+        if (!Number.isFinite(audio.duration) || audio.duration === 0) return;
+        const ratio = (audio.currentTime / audio.duration) * 100;
+        seekBar.value = String(ratio);
+        currentTimeText.textContent = formatTime(audio.currentTime);
+      });
+
+      audio.addEventListener('loadedmetadata', () => {
+        durationText.textContent = formatTime(audio.duration || 0);
+        seekBar.max = String(audio.duration || 100);
+        seekBar.value = String(audio.currentTime || 0);
+      });
+
+      audio.addEventListener('ended', () => {
+        if (state.loop) {
+          audio.currentTime = 0;
+          audio.play();
+          return;
+        }
+        nextTrack();
+      });
+
+      audio.addEventListener('play', () => {
+        state.playing = true;
+        syncPlayButtonState();
+      });
+
+      audio.addEventListener('pause', () => {
+        state.playing = false;
+        syncPlayButtonState();
+      });
+
+      function syncPlayButtonState() {
+        const playClass = state.playing ? 'pause' : '';
+        bigPlayBtn.classList.toggle('pause', state.playing);
+        miniPlayBtn.classList.toggle('pause', state.playing);
+        bigPlayBtn.setAttribute('aria-label', state.playing ? 'Pause' : 'Play');
+        miniPlayBtn.setAttribute('aria-label', state.playing ? 'Pause' : 'Play');
+      }
+
+      function formatTime(sec) {
+        const safe = Number.isFinite(sec) ? sec : 0;
+        const mins = Math.floor(safe / 60);
+        const secs = Math.floor(safe % 60).toString().padStart(2, '0');
+        return `${mins}:${secs}`;
+      }
+
+      function openDb() {
+        return new Promise((resolve, reject) => {
+          const request = indexedDB.open(DB_NAME, 1);
+          request.onupgradeneeded = () => {
+            const db = request.result;
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+              db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+            }
+          };
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = () => reject(request.error || new Error('IndexedDB failed.'));
+        });
+      }
+
+      async function saveSongs(records) {
+        const db = await openDb();
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        for (const record of records) {
+          store.put(record);
+        }
+        await new Promise((resolve, reject) => {
+          tx.oncomplete = resolve;
+          tx.onerror = () => reject(tx.error || new Error('Could not save songs.'));
+        });
+      }
+
+      async function loadSongs() {
+        const db = await openDb();
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const request = store.getAll();
+        return new Promise((resolve, reject) => {
+          request.onsuccess = () => resolve(request.result || []);
+          request.onerror = () => reject(request.error || new Error('Could not load songs.'));
+        });
+      }
+
+      async function renderSongs() {
+        state.songs = await loadSongs();
+        songListEl.innerHTML = '';
+
+        if (!state.songs.length) {
+          songListEl.innerHTML = '<div class="song-sub" style="padding:12px 0;">No tracks yet. Upload a song or ZIP to begin.</div>';
+          return;
+        }
+
+        state.songs.forEach((song, index) => {
+          const row = document.createElement('div');
+          row.className = 'song-row';
+          row.innerHTML = `
+            <div class="song-thumb">${(song.title || 'S').slice(0, 1).toUpperCase()}</div>
+            <div class="song-meta">
+              <div class="song-title">${escapeHtml(song.title || 'Untitled')}</div>
+              <div class="song-sub">${song.source || 'Local file'}</div>
+            </div>
+            <div class="play-chip" data-index="${index}" aria-label="Play track"></div>
+          `;
+
+          row.addEventListener('click', (event) => {
+            const target = event.target.closest('.play-chip');
+            if (target) {
+              playAtIndex(Number(target.dataset.index));
+            } else {
+              playAtIndex(index);
+            }
+          });
+
+          songListEl.appendChild(row);
+        });
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      async function handleFiles(event) {
+        const files = [...(event.target.files || [])];
+        if (!files.length) return;
+
+        const newRecords = [];
+        for (const file of files) {
+          if (file.type.startsWith('audio/') || file.name.match(/\.(mp3|wav|flac|m4a|ogg|aac|opus)$/i)) {
+            newRecords.push({
+              id: crypto.randomUUID(),
+              title: sanitizeFileName(file.name),
+              blob: file,
+              source: file.name,
+              type: 'audio',
+            });
+          } else if (/\.zip$/i.test(file.name)) {
+            try {
+              const zipRecords = await extractZipAudio(file);
+              newRecords.push(...zipRecords);
+            } catch (error) {
+              console.warn('ZIP import failed:', error);
+            }
+          }
+        }
+
+        if (!newRecords.length) {
+          event.target.value = '';
+          return;
+        }
+
+        await saveSongs(newRecords);
+        await renderSongs();
+        event.target.value = '';
+        if (state.songs.length) {
+          playAtIndex(0);
+        }
+      }
+
+      function sanitizeFileName(name) {
+        const cleaned = (name || 'Untitled').replace(/\.[^/.]+$/, '').replace(/[_-]+/g, ' ').trim();
+        return cleaned || 'Untitled';
+      }
+
+      async function extractZipAudio(file) {
+        const bytes = new Uint8Array(await file.arrayBuffer());
+        const entries = [];
+        const central = findCentralDirectory(bytes);
+        if (!central) return [];
+
+        const { cdOffset, cdSize } = central;
+        let pos = cdOffset;
+        const end = cdOffset + cdSize;
+
+        while (pos < end) {
+          if (bytes[pos] !== 0x50 || bytes[pos + 1] !== 0x4b || bytes[pos + 2] !== 0x01 || bytes[pos + 3] !== 0x02) break;
+
+          const fileNameLen = (bytes[pos + 28] | (bytes[pos + 29] << 8));
+          const extraLen = (bytes[pos + 30] | (bytes[pos + 31] << 8));
+          const commentLen = (bytes[pos + 32] | (bytes[pos + 33] << 8));
+          const compMethod = bytes[pos + 10] | (bytes[pos + 11] << 8);
+          const dataOffset = bytes[pos + 42] | (bytes[pos + 43] << 8) | (bytes[pos + 44] << 16) | (bytes[pos + 45] << 24);
+          const compressedSize = readU32LE(bytes, pos + 20);
+          const fileName = bytes.slice(pos + 46, pos + 46 + fileNameLen);
+          const fileNameString = new TextDecoder('utf-8').decode(fileName);
+          const isValidAudio = /\.(mp3|wav|flac|m4a|ogg|aac|opus)$/i.test(fileNameString);
+
+          if (isValidAudio && !fileNameString.includes('__MACOSX') && !fileNameString.includes('/._')) {
+            const blob = await extractCompressedEntry(bytes, file, dataOffset, compMethod, compressedSize, fileNameString);
+            entries.push({
+              id: crypto.randomUUID(),
+              title: sanitizeFileName(fileNameString),
+              blob,
+              source: file.name + ' / ' + fileNameString,
+              type: 'audio',
+            });
+          }
+
+          pos += 46 + fileNameLen + extraLen + commentLen;
+        }
+
+        return entries.sort((a, b) => a.title.localeCompare(b.title));
+      }
+
+      function findCentralDirectory(bytes) {
+        const maxScan = Math.min(bytes.length, 65535 + 22);
+        for (let i = bytes.length - 22; i >= Math.max(0, bytes.length - maxScan); i--) {
+          if (bytes[i] === 0x50 && bytes[i + 1] === 0x4b && bytes[i + 2] === 0x05 && bytes[i + 3] === 0x06) {
+            const cdSize = readU32LE(bytes, i + 12);
+            const cdOffset = readU32LE(bytes, i + 16);
+            return { cdSize, cdOffset };
+          }
+        }
+        return null;
+      }
+
+      function readU32LE(bytes, offset) {
+        return bytes[offset] | (bytes[offset + 1] << 8) | (bytes[offset + 2] << 16) | (bytes[offset + 3] << 24);
+      }
+
+      async function extractCompressedEntry(bytes, zipFile, localOffset, compMethod, compressedSize, fileNameString) {
+        const zipView = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+        const fileNameLen = zipView.getUint16(localOffset + 26, true);
+        const extraLen = zipView.getUint16(localOffset + 28, true);
+        const dataOffset = localOffset + 30 + fileNameLen + extraLen;
+        const compressed = bytes.slice(dataOffset, dataOffset + compressedSize);
+
+        if (compMethod === 0) {
+          return new Blob([compressed], { type: inferMime(fileNameString) });
+        }
+
+        if (compMethod === 8) {
+          const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('deflate'));
+          const inflated = await new Response(stream).arrayBuffer();
+          return new Blob([new Uint8Array(inflated)], { type: inferMime(fileNameString) });
+        }
+
+        throw new Error('Unsupported ZIP compression method ' + compMethod);
+      }
+
+      function inferMime(name) {
+        const ext = (name.split('.').pop() || '').toLowerCase();
+        const map = {
+          mp3: 'audio/mpeg',
+          wav: 'audio/wav',
+          m4a: 'audio/mp4',
+          flac: 'audio/flac',
+          ogg: 'audio/ogg',
+          aac: 'audio/aac',
+          opus: 'audio/opus',
+        };
+        return map[ext] || 'audio/mpeg';
+      }
+
+      async function playAtIndex(index) {
+        if (!state.songs.length) return;
+        const song = state.songs[index];
+        if (!song) return;
+        state.currentIndex = index;
+        const url = URL.createObjectURL(song.blob);
+        if (audio.src && audio.src.startsWith('blob:')) URL.revokeObjectURL(audio.src);
+        audio.src = url;
+        audio.load();
+        audio.play();
+        updateCurrentMeta(song.title || 'Untitled');
+      }
+
+      function updateCurrentMeta(title) {
+        playerTitle.textContent = title || 'Nothing playing';
+        miniTrackText.textContent = title || 'Nothing playing';
+        if ('mediaSession' in navigator) {
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: title || 'Nothing playing',
+            artist: 'Spotibai',
+            album: 'Offline music',
+          });
+        }
+      }
+
+      function togglePlayback() {
+        if (!state.songs.length) return;
+        if (state.currentIndex === -1) {
+          playAtIndex(0);
+          return;
+        }
+        if (audio.paused) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      }
+
+      function prevTrack() {
+        if (!state.songs.length) return;
+        if (state.currentIndex <= 0) {
+          if (state.songs.length > 0) playAtIndex(0);
+          return;
+        }
+        playAtIndex(state.currentIndex - 1);
+      }
+
+      function nextTrack() {
+        if (!state.songs.length) return;
+        const next = state.currentIndex + 1 < state.songs.length ? state.currentIndex + 1 : 0;
+        playAtIndex(next);
+      }
+
+      (async function init() {
+        await renderSongs();
+        syncPlayButtonState();
+      })();
     </script>
   </body>
 </html>
